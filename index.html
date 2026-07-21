@@ -1,0 +1,1281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A comprehensive research paper on Machine Learning vs Rule-Based Systems: When to use what and why.">
+    <meta name="keywords" content="machine learning, AI, rule-based systems, algorithms, data science">
+    <meta name="author" content="ML Research Team">
+    <meta name="theme-color" content="#0056b3">
+    
+    <!-- Open Graph Tags -->
+    <meta property="og:title" content="Machine Learning vs Rules: A Research Paper">
+    <meta property="og:description" content="Comprehensive analysis of when to use ML vs rules, featuring practical frameworks and case studies.">
+    <meta property="og:type" content="article">
+    <meta property="og:image" content="https://via.placeholder.com/1200x630">
+    
+    <title>Machine Learning vs Rules - Research Paper</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Merriweather:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect fill='%230056b3' width='100' height='100'/><text x='50' y='65' font-size='60' fill='white' text-anchor='middle' font-weight='bold'>ML</text></svg>">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="#home" class="nav-logo">ML Research</a>
+            <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="#home" class="nav-link">Home</a></li>
+                <li><a href="#abstract" class="nav-link">Abstract</a></li>
+                <li><a href="#introduction" class="nav-link">Introduction</a></li>
+                <li><a href="#comparison" class="nav-link">AI vs ML</a></li>
+                <li><a href="#ml-section" class="nav-link">ML Fundamentals</a></li>
+                <li><a href="#workflow" class="nav-link">Workflow</a></li>
+                <li><a href="#algorithms" class="nav-link">Algorithms</a></li>
+                <li><a href="#overfitting" class="nav-link">Overfitting</a></li>
+                <li><a href="#task-framing" class="nav-link">Task Framing</a></li>
+                <li><a href="#case-study" class="nav-link">Case Study</a></li>
+                <li><a href="#conclusion" class="nav-link">Conclusion</a></li>
+            </ul>
+            <div class="theme-toggle">
+                <button id="themeToggle" aria-label="Toggle dark mode">
+                    <svg class="sun-icon" width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                        <path d="M10 3a1 1 0 011 1v1a1 1 0 11-2 0V4a1 1 0 011-1zm0 12a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zm7-5a1 1 0 110 2h-1a1 1 0 110-2h1zm-12 0a1 1 0 110 2H4a1 1 0 110-2h1zm9.9-5a1 1 0 01.707.293l.707.707a1 1 0 01-1.414 1.414l-.707-.707A1 1 0 0114.9 5zm-9.8 9.8a1 1 0 01.707.293l.707.707a1 1 0 11-1.414 1.414l-.707-.707a1 1 0 01.707-1.707z"/>
+                    </svg>
+                    <svg class="moon-icon" width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                        <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Reading Progress Bar -->
+    <div id="readingProgress" class="reading-progress"></div>
+
+    <!-- Home Section -->
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1 class="hero-title fade-in">What is Machine Learning Actually Good For?</h1>
+            <p class="hero-subtitle fade-in">And When is a Plain Rule Better?</p>
+            
+            <div class="author-info fade-in">
+                <p class="author-name">Research Paper</p>
+                <p class="publish-date"><span id="currentDate"></span></p>
+            </div>
+
+            <div class="hero-buttons fade-in">
+                <a href="#abstract" class="btn btn-primary">Read Paper</a>
+                <button class="btn btn-secondary" id="downloadPdf">Download PDF</button>
+                <a href="https://github.com" target="_blank" rel="noopener" class="btn btn-tertiary">View on GitHub</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Abstract Section -->
+    <section id="abstract" class="section">
+        <div class="container">
+            <h2 class="section-title">Abstract</h2>
+            <div class="abstract-box">
+                <p>This paper provides a comprehensive analysis of when to apply machine learning versus rule-based systems in practical applications. While machine learning has emerged as a dominant paradigm in artificial intelligence, it is not a universal solution. This research presents a decision framework for practitioners to determine the optimal approach based on problem characteristics, data availability, regulatory requirements, and deployment constraints. Through theoretical foundations and practical case studies, we demonstrate that understanding the trade-offs between interpretability, adaptability, computational efficiency, and accuracy is crucial for making informed architectural decisions. Our analysis covers fundamental ML concepts, supervised and unsupervised learning paradigms, overfitting phenomena, and task framing methodologies. A detailed case study on laptop recommendation systems illustrates real-world application of these principles, providing actionable insights for data science teams.</p>
+                <div class="keywords">
+                    <strong>Keywords:</strong> Machine Learning, Decision Trees, Rule-Based Systems, Algorithm Selection, Data-Driven vs Rule-Driven, ML Workflow, Supervised Learning, Task Framing, Decision Frameworks
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Introduction Section -->
+    <section id="introduction" class="section bg-light">
+        <div class="container">
+            <h2 class="section-title">1. Introduction</h2>
+            
+            <div class="intro-grid">
+                <div class="intro-card">
+                    <h3>What is Artificial Intelligence?</h3>
+                    <p>Artificial Intelligence represents the broadest field—building systems that perform tasks typically requiring human intelligence. This includes reasoning, perception, language understanding, and planning. AI is not a single technique but rather an umbrella concept encompassing multiple approaches.</p>
+                </div>
+
+                <div class="intro-card">
+                    <h3>What is Machine Learning?</h3>
+                    <p>Machine Learning is a subset of AI where systems learn patterns from data rather than following explicitly programmed rules. Instead of engineers coding decision logic, the system infers patterns from examples, enabling it to generalize to new, unseen scenarios.</p>
+                </div>
+
+                <div class="intro-card">
+                    <h3>Why Does ML Exist?</h3>
+                    <p>ML emerged because many real-world problems are too complex, high-dimensional, or variable for humans to encode as rules. When patterns are data-dependent or environments change frequently, learning approaches outperform static rule sets.</p>
+                </div>
+
+                <div class="intro-card">
+                    <h3>Historical Context</h3>
+                    <p>From early expert systems (1970s-80s) to modern deep learning (2012-present), the field has evolved from knowledge engineering to data engineering. Recent breakthroughs in neural networks, fueled by computational power and data availability, have transformed AI applications.</p>
+                </div>
+            </div>
+
+            <div class="info-box">
+                <h3>Modern Applications of ML</h3>
+                <ul class="modern-apps">
+                    <li><strong>Computer Vision:</strong> Image classification, object detection, facial recognition, medical imaging</li>
+                    <li><strong>Natural Language Processing:</strong> Translation, sentiment analysis, chatbots, information extraction</li>
+                    <li><strong>Recommendation Systems:</strong> Product recommendations, content personalization, collaborative filtering</li>
+                    <li><strong>Predictive Analytics:</strong> Demand forecasting, risk assessment, anomaly detection</li>
+                    <li><strong>Autonomous Systems:</strong> Self-driving vehicles, robotics, game-playing agents</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Comparison Section -->
+    <section id="comparison" class="section">
+        <div class="container">
+            <h2 class="section-title">2. AI vs ML vs Analytics vs Rule-Based Systems</h2>
+            
+            <div class="comparison-table-wrapper">
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Aspect</th>
+                            <th>AI (Broad)</th>
+                            <th>Machine Learning</th>
+                            <th>Analytics</th>
+                            <th>Rule-Based</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Definition</strong></td>
+                            <td>Systems performing intelligent tasks</td>
+                            <td>Learning patterns from data</td>
+                            <td>Descriptive/inferential data analysis</td>
+                            <td>Explicit IF-THEN logic</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Learning</strong></td>
+                            <td>Varied approaches</td>
+                            <td>Data-driven pattern inference</td>
+                            <td>Statistical summaries only</td>
+                            <td>No learning</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Explainability</strong></td>
+                            <td>Varies widely</td>
+                            <td>Often a "black box"</td>
+                            <td>Highly interpretable</td>
+                            <td>Fully transparent</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Data Requirement</strong></td>
+                            <td>Varies</td>
+                            <td>Substantial labeled data needed</td>
+                            <td>Existing data only</td>
+                            <td>No data needed</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Generalization</strong></td>
+                            <td>Varies</td>
+                            <td>Generalizes to unseen data</td>
+                            <td>Summarizes existing data</td>
+                            <td>Static, no adaptation</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Cost</strong></td>
+                            <td>Varies widely</td>
+                            <td>High (development & compute)</td>
+                            <td>Low to medium</td>
+                            <td>Low (initial)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Maintenance</strong></td>
+                            <td>Varies</td>
+                            <td>Ongoing (monitoring, retraining)</td>
+                            <td>Low maintenance</td>
+                            <td>Manual updates needed</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="hierarchy-illustration">
+                <svg viewBox="0 0 600 400" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <linearGradient id="aiGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:#0056b3;stop-opacity:1" />
+                            <stop offset="100%" style="stop-color:#003d82;stop-opacity:1" />
+                        </linearGradient>
+                        <linearGradient id="mlGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:#004085;stop-opacity:1" />
+                            <stop offset="100%" style="stop-color:#002752;stop-opacity:1" />
+                        </linearGradient>
+                    </defs>
+                    
+                    <!-- AI Container (largest) -->
+                    <rect x="50" y="30" width="500" height="340" fill="none" stroke="url(#aiGrad)" stroke-width="3" rx="10" opacity="0.8"/>
+                    <text x="60" y="50" font-size="18" font-weight="bold" fill="var(--color-primary)">Artificial Intelligence (Broad Field)</text>
+                    
+                    <!-- ML Container -->
+                    <rect x="80" y="80" width="200" height="250" fill="url(#mlGrad)" rx="8" opacity="0.85"/>
+                    <text x="100" y="110" font-size="16" font-weight="bold" fill="white">Machine Learning</text>
+                    <text x="100" y="140" font-size="12" fill="white">• Classification</text>
+                    <text x="100" y="160" font-size="12" fill="white">• Regression</text>
+                    <text x="100" y="180" font-size="12" fill="white">• Clustering</text>
+                    <text x="100" y="200" font-size="12" fill="white">• Deep Learning</text>
+                    <text x="100" y="220" font-size="12" fill="white">• NLP</text>
+                    <text x="100" y="240" font-size="12" fill="white">• Computer Vision</text>
+                    <text x="100" y="290" font-size="11" fill="white">Learns from data</text>
+                    <text x="100" y="310" font-size="11" fill="white">via algorithms</text>
+                    
+                    <!-- Rule-Based Systems -->
+                    <rect x="310" y="80" width="200" height="120" fill="var(--color-accent)" rx="8"/>
+                    <text x="330" y="110" font-size="16" font-weight="bold" fill="white">Rule-Based Systems</text>
+                    <text x="330" y="140" font-size="12" fill="white">• Expert Systems</text>
+                    <text x="330" y="160" font-size="12" fill="white">• Logical inference</text>
+                    <text x="330" y="180" font-size="12" fill="white">Human-programmed</text>
+                    
+                    <!-- Analytics -->
+                    <rect x="310" y="220" width="200" height="110" fill="var(--color-success)" rx="8"/>
+                    <text x="330" y="250" font-size="16" font-weight="bold" fill="white">Analytics</text>
+                    <text x="330" y="280" font-size="12" fill="white">• Descriptive stats</text>
+                    <text x="330" y="300" font-size="12" fill="white">• Dashboards</text>
+                    <text x="330" y="320" font-size="12" fill="white">No true learning</text>
+                </svg>
+            </div>
+        </div>
+    </section>
+
+    <!-- When to Use ML Section -->
+    <section id="ml-section" class="section bg-light">
+        <div class="container">
+            <h2 class="section-title">3. When to Use ML vs When to Use Rules</h2>
+            
+            <div class="decision-framework">
+                <div class="framework-column">
+                    <h3 class="framework-title use-ml">✓ Use Machine Learning When:</h3>
+                    <ul class="framework-list">
+                        <li>Patterns are too complex or high-dimensional for humans to hand-code</li>
+                        <li>You have substantial labeled or historical data</li>
+                        <li>The environment/problem changes and rules need frequent updating</li>
+                        <li>Some tolerance for imperfect/probabilistic predictions is acceptable</li>
+                        <li>Automating decisions at scale is required</li>
+                        <li>You can afford development, training, and monitoring costs</li>
+                        <li>Slight errors are less costly than not adapting to new patterns</li>
+                    </ul>
+                    
+                    <div class="pros-box">
+                        <h4>Advantages of ML</h4>
+                        <ul>
+                            <li>Adapts to complex patterns</li>
+                            <li>Improves with more data</li>
+                            <li>Automates decisions at scale</li>
+                            <li>Learns nuanced relationships</li>
+                            <li>Handles non-linear problems</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="framework-column">
+                    <h3 class="framework-title use-rule">✗ Use Plain Rules When:</h3>
+                    <ul class="framework-list">
+                        <li>The logic is simple, stable, and fully known in advance</li>
+                        <li>Full explainability/auditability is required (legal, medical, compliance)</li>
+                        <li>Little or no historical data exists to learn from</li>
+                        <li>The relationship between input and output doesn't change over time</li>
+                        <li>Errors must be predictable and auditable</li>
+                        <li>The domain has clear, unchanging regulations</li>
+                        <li>Performance and cost are critical constraints</li>
+                    </ul>
+                    
+                    <div class="pros-box">
+                        <h4>Advantages of Rules</h4>
+                        <ul>
+                            <li>Fully transparent and auditable</li>
+                            <li>Deterministic behavior</li>
+                            <li>Low development cost</li>
+                            <li>Instantly explainable</li>
+                            <li>No data dependencies</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="info-box">
+                <h3>Common Pitfalls</h3>
+                <div class="pitfalls-grid">
+                    <div class="pitfall">
+                        <h4>Over-Engineering with ML</h4>
+                        <p>Using complex ML models for simple classification tasks when a rule would suffice. This increases development time, maintenance burden, and cost without proportional benefit.</p>
+                    </div>
+                    <div class="pitfall">
+                        <h4>Ignoring Data Quality</h4>
+                        <p>Building ML models on poor, biased, or insufficient data. "Garbage in, garbage out" — data quality matters more than algorithm complexity.</p>
+                    </div>
+                    <div class="pitfall">
+                        <h4>Neglecting Monitoring</h4>
+                        <p>Deploying ML models without ongoing monitoring for data drift, concept drift, or performance degradation. Models degrade silently as data distributions change.</p>
+                    </div>
+                    <div class="pitfall">
+                        <h4>Black-Box Deployment</h4>
+                        <p>Using opaque models in regulated industries (finance, healthcare) without explainability requirements. Regulatory and ethical issues often demand interpretability.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ML Workflow Section -->
+    <section id="workflow" class="section">
+        <div class="container">
+            <h2 class="section-title">4. Machine Learning Workflow (10-Step Pipeline)</h2>
+            
+            <div class="workflow-diagram">
+                <svg viewBox="0 0 1000 500" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+                            <polygon points="0 0, 10 3, 0 6" fill="var(--color-primary)" opacity="0.6"/>
+                        </marker>
+                    </defs>
+                    
+                    <!-- Step 1: Problem Definition -->
+                    <rect x="20" y="50" width="80" height="80" rx="8" fill="var(--color-primary)"/>
+                    <text x="60" y="85" font-size="28" fill="white" text-anchor="middle">1️⃣</text>
+                    <text x="60" y="115" font-size="12" fill="white" text-anchor="middle" font-weight="bold">Problem</text>
+                    <text x="60" y="130" font-size="12" fill="white" text-anchor="middle" font-weight="bold">Definition</text>
+                    
+                    <!-- Arrow 1 -->
+                    <line x1="100" y1="90" x2="140" y2="90" stroke="var(--color-primary)" stroke-width="2" marker-end="url(#arrowhead)" opacity="0.6"/>
+                    
+                    <!-- Step 2: Data Collection -->
+                    <rect x="140" y="50" width="80" height="80" rx="8" fill="var(--color-primary)"/>
+                    <text x="180" y="85" font-size="28" fill="white" text-anchor="middle">2️⃣</text>
+                    <text x="180" y="115" font-size="12" fill="white" text-anchor="middle" font-weight="bold">Data</text>
+                    <text x="180" y="130" font-size="12" fill="white" text-anchor="middle" font-weight="bold">Collection</text>
+                    
+                    <!-- Arrow 2 -->
+                    <line x1="220" y1="90" x2="260" y2="90" stroke="var(--color-primary)" stroke-width="2" marker-end="url(#arrowhead)" opacity="0.6"/>
+                    
+                    <!-- Step 3: Data Cleaning -->
+                    <rect x="260" y="50" width="80" height="80" rx="8" fill="var(--color-primary)"/>
+                    <text x="300" y="85" font-size="28" fill="white" text-anchor="middle">3️⃣</text>
+                    <text x="300" y="115" font-size="12" fill="white" text-anchor="middle" font-weight="bold">Data</text>
+                    <text x="300" y="130" font-size="12" fill="white" text-anchor="middle" font-weight="bold">Cleaning</text>
+                    
+                    <!-- Arrow 3 -->
+                    <line x1="340" y1="90" x2="380" y2="90" stroke="var(--color-primary)" stroke-width="2" marker-end="url(#arrowhead)" opacity="0.6"/>
+                    
+                    <!-- Step 4: Feature Engineering -->
+                    <rect x="380" y="50" width="80" height="80" rx="8" fill="var(--color-primary)"/>
+                    <text x="420" y="85" font-size="28" fill="white" text-anchor="middle">4️⃣</text>
+                    <text x="420" y="115" font-size="12" fill="white" text-anchor="middle" font-weight="bold">Feature</text>
+                    <text x="420" y="130" font-size="12" fill="white" text-anchor="middle" font-weight="bold">Engineering</text>
+                    
+                    <!-- Arrow 4 -->
+                    <line x1="460" y1="90" x2="500" y2="90" stroke="var(--color-primary)" stroke-width="2" marker-end="url(#arrowhead)" opacity="0.6"/>
+                    
+                    <!-- Step 5: Model Selection -->
+                    <rect x="500" y="50" width="80" height="80" rx="8" fill="var(--color-primary)"/>
+                    <text x="540" y="85" font-size="28" fill="white" text-anchor="middle">5️⃣</text>
+                    <text x="540" y="115" font-size="12" fill="white" text-anchor="middle" font-weight="bold">Model</text>
+                    <text x="540" y="130" font-size="12" fill="white" text-anchor="middle" font-weight="bold">Selection</text>
+                    
+                    <!-- Second Row -->
+                    <!-- Arrow to next row -->
+                    <line x1="540" y1="130" x2="540" y2="170" stroke="var(--color-primary)" stroke-width="2" marker-end="url(#arrowhead)" opacity="0.6"/>
+                    
+                    <!-- Step 6: Training -->
+                    <rect x="500" y="170" width="80" height="80" rx="8" fill="var(--color-success)"/>
+                    <text x="540" y="205" font-size="28" fill="white" text-anchor="middle">6️⃣</text>
+                    <text x="540" y="235" font-size="12" fill="white" text-anchor="middle" font-weight="bold">Training</text>
+                    <text x="540" y="250" font-size="12" fill="white" text-anchor="middle" font-weight="bold"></text>
+                    
+                    <!-- Arrow 6 -->
+                    <line x1="500" y1="210" x2="460" y2="210" stroke="var(--color-success)" stroke-width="2" marker-end="url(#arrowhead)" opacity="0.6"/>
+                    
+                    <!-- Step 7: Validation -->
+                    <rect x="380" y="170" width="80" height="80" rx="8" fill="var(--color-success)"/>
+                    <text x="420" y="205" font-size="28" fill="white" text-anchor="middle">7️⃣</text>
+                    <text x="420" y="235" font-size="12" fill="white" text-anchor="middle" font-weight="bold">Validation</text>
+                    <text x="420" y="250" font-size="12" fill="white" text-anchor="middle" font-weight="bold"></text>
+                    
+                    <!-- Arrow 7 -->
+                    <line x1="380" y1="210" x2="340" y2="210" stroke="var(--color-success)" stroke-width="2" marker-end="url(#arrowhead)" opacity="0.6"/>
+                    
+                    <!-- Step 8: Testing -->
+                    <rect x="260" y="170" width="80" height="80" rx="8" fill="var(--color-success)"/>
+                    <text x="300" y="205" font-size="28" fill="white" text-anchor="middle">8️⃣</text>
+                    <text x="300" y="235" font-size="12" fill="white" text-anchor="middle" font-weight="bold">Testing</text>
+                    <text x="300" y="250" font-size="12" fill="white" text-anchor="middle" font-weight="bold"></text>
+                    
+                    <!-- Arrow 8 -->
+                    <line x1="260" y1="210" x2="220" y2="210" stroke="var(--color-success)" stroke-width="2" marker-end="url(#arrowhead)" opacity="0.6"/>
+                    
+                    <!-- Step 9: Deployment -->
+                    <rect x="140" y="170" width="80" height="80" rx="8" fill="var(--color-warning)"/>
+                    <text x="180" y="205" font-size="28" fill="white" text-anchor="middle">9️⃣</text>
+                    <text x="180" y="235" font-size="12" fill="white" text-anchor="middle" font-weight="bold">Deployment</text>
+                    <text x="180" y="250" font-size="12" fill="white" text-anchor="middle" font-weight="bold"></text>
+                    
+                    <!-- Arrow 9 -->
+                    <line x1="140" y1="210" x2="100" y2="210" stroke="var(--color-warning)" stroke-width="2" marker-end="url(#arrowhead)" opacity="0.6"/>
+                    
+                    <!-- Step 10: Monitoring -->
+                    <rect x="20" y="170" width="80" height="80" rx="8" fill="var(--color-warning)"/>
+                    <text x="60" y="205" font-size="28" fill="white" text-anchor="middle">🔟</text>
+                    <text x="60" y="235" font-size="12" fill="white" text-anchor="middle" font-weight="bold">Monitoring</text>
+                    <text x="60" y="250" font-size="12" fill="white" text-anchor="middle" font-weight="bold"></text>
+                    
+                    <!-- Feedback loop -->
+                    <path d="M 60 170 Q 60 130, 420 130 Q 420 170" stroke="var(--color-accent)" stroke-width="2" fill="none" stroke-dasharray="5,5" marker-end="url(#arrowhead)"/>
+                    <text x="240" y="120" font-size="11" fill="var(--color-accent)" text-anchor="middle" font-weight="bold">Feedback & Retraining</text>
+                </svg>
+            </div>
+
+            <div class="workflow-details">
+                <div class="workflow-step">
+                    <h4>1. Problem Definition</h4>
+                    <p>Clearly state what decision or prediction you're trying to make. This is foundational—a poorly defined problem leads to wasted effort.</p>
+                </div>
+
+                <div class="workflow-step">
+                    <h4>2. Data Collection</h4>
+                    <p>Gather raw data relevant to the problem. Data quality and relevance directly impact model performance.</p>
+                </div>
+
+                <div class="workflow-step">
+                    <h4>3. Data Cleaning</h4>
+                    <p>Handle missing values, duplicates, outliers, and inconsistent formats. This often consumes 70% of project time.</p>
+                </div>
+
+                <div class="workflow-step">
+                    <h4>4. Feature Engineering</h4>
+                    <p>Transform raw data into meaningful input variables (features). Domain expertise here significantly impacts model quality.</p>
+                </div>
+
+                <div class="workflow-step">
+                    <h4>5. Model Selection</h4>
+                    <p>Choose an algorithm suited to your task (classification, regression, clustering, etc.). No one-size-fits-all solution exists.</p>
+                </div>
+
+                <div class="workflow-step">
+                    <h4>6. Training</h4>
+                    <p>The model learns parameters by minimizing error on training data. Hyperparameter tuning occurs here.</p>
+                </div>
+
+                <div class="workflow-step">
+                    <h4>7. Validation</h4>
+                    <p>Evaluate performance on a held-out dataset to tune hyperparameters. Prevents overfitting.</p>
+                </div>
+
+                <div class="workflow-step">
+                    <h4>8. Testing</h4>
+                    <p>Final unbiased evaluation on test data the model has never seen. This gives true performance estimate.</p>
+                </div>
+
+                <div class="workflow-step">
+                    <h4>9. Deployment</h4>
+                    <p>Put the model into production to serve real predictions. Often involves containerization, API endpoints, and infrastructure.</p>
+                </div>
+
+                <div class="workflow-step">
+                    <h4>10. Monitoring</h4>
+                    <p>Track performance over time to catch data drift, concept drift, or silent failures. Ongoing responsibility of data teams.</p>
+                </div>
+            </div>
+
+            <div class="section-chart">
+                <h3>ML Workflow Timeline & Effort Distribution</h3>
+                <canvas id="workflowChart"></canvas>
+            </div>
+        </div>
+    </section>
+
+    <!-- Algorithms Section -->
+    <section id="algorithms" class="section bg-light">
+        <div class="container">
+            <h2 class="section-title">5. Supervised Learning: Classification & Regression</h2>
+
+            <div class="algorithms-intro">
+                <p>Supervised learning learns from labeled data (input → known correct output). The two primary tasks are:</p>
+            </div>
+
+            <div class="algorithms-grid">
+                <!-- Classification -->
+                <div class="algorithm-card">
+                    <h3>Classification</h3>
+                    <p><strong>Goal:</strong> Predict a discrete category</p>
+                    <p><strong>Example:</strong> Is an email spam or not spam?</p>
+                    <p><strong>Output:</strong> Discrete label (class)</p>
+                    <p><strong>Evaluation:</strong> Accuracy, Precision, Recall, F1-Score, AUC</p>
+                </div>
+
+                <div class="algorithm-card">
+                    <h3>Regression</h3>
+                    <p><strong>Goal:</strong> Predict a continuous number</p>
+                    <p><strong>Example:</strong> What will house prices be in 6 months?</p>
+                    <p><strong>Output:</strong> Continuous value (number)</p>
+                    <p><strong>Evaluation:</strong> MSE, RMSE, MAE, R² Score</p>
+                </div>
+            </div>
+
+            <h3 class="subsection-title">Key Supervised Learning Algorithms</h3>
+
+            <div class="algorithm-details">
+                <div class="algo-detail">
+                    <div class="algo-header">
+                        <h4>Linear Regression</h4>
+                        <span class="algo-type">Regression</span>
+                    </div>
+                    <p><strong>How it works:</strong> Fits a straight-line relationship between inputs and a continuous output using least squares.</p>
+                    <p><strong>Pros:</strong> Simple, interpretable, fast, requires little data</p>
+                    <p><strong>Cons:</strong> Assumes linear relationships; poor for complex patterns</p>
+                    <p><strong>Use cases:</strong> Stock price prediction, demand forecasting, linear trend analysis</p>
+                </div>
+
+                <div class="algo-detail">
+                    <div class="algo-header">
+                        <h4>Logistic Regression</h4>
+                        <span class="algo-type">Classification</span>
+                    </div>
+                    <p><strong>How it works:</strong> Despite its name, used for binary classification. Outputs probability via a sigmoid function.</p>
+                    <p><strong>Pros:</strong> Interpretable, outputs probabilities, efficient, good baseline</p>
+                    <p><strong>Cons:</strong> Limited to linear decision boundaries; poor for complex problems</p>
+                    <p><strong>Use cases:</strong> Email spam detection, disease diagnosis, churn prediction</p>
+                </div>
+
+                <div class="algo-detail">
+                    <div class="algo-header">
+                        <h4>Decision Trees</h4>
+                        <span class="algo-type">Both</span>
+                    </div>
+                    <p><strong>How it works:</strong> Splits data recursively on feature thresholds, creating a tree of decisions.</p>
+                    <p><strong>Pros:</strong> Highly interpretable, handles non-linear relationships, requires no feature scaling</p>
+                    <p><strong>Cons:</strong> Prone to overfitting, unstable with small data changes</p>
+                    <p><strong>Use cases:</strong> Credit approval, customer segmentation, diagnosis systems</p>
+                </div>
+
+                <div class="algo-detail">
+                    <div class="algo-header">
+                        <h4>Random Forest</h4>
+                        <span class="algo-type">Both</span>
+                    </div>
+                    <p><strong>How it works:</strong> Ensemble of many decision trees; predictions are averaged (regression) or voted (classification).</p>
+                    <p><strong>Pros:</strong> Reduces overfitting, handles complex patterns, robust, good default choice</p>
+                    <p><strong>Cons:</strong> Less interpretable than single trees, computationally expensive, memory intensive</p>
+                    <p><strong>Use cases:</strong> Feature importance analysis, credit scoring, fraud detection</p>
+                </div>
+
+                <div class="algo-detail">
+                    <div class="algo-header">
+                        <h4>Support Vector Machine (SVM)</h4>
+                        <span class="algo-type">Both</span>
+                    </div>
+                    <p><strong>How it works:</strong> Finds the optimal boundary (hyperplane) that separates classes with maximum margin.</p>
+                    <p><strong>Pros:</strong> Effective in high dimensions, flexible with different kernels, memory efficient</p>
+                    <p><strong>Cons:</strong> Can be slow with large datasets, requires feature scaling, hyperparameter tuning critical</p>
+                    <p><strong>Use cases:</strong> Text classification, image recognition, bioinformatics</p>
+                </div>
+
+                <div class="algo-detail">
+                    <div class="algo-header">
+                        <h4>K-Nearest Neighbors (KNN)</h4>
+                        <span class="algo-type">Both</span>
+                    </div>
+                    <p><strong>How it works:</strong> Classifies/regresses a point based on the k nearest data points in feature space.</p>
+                    <p><strong>Pros:</strong> Simple, no training phase, naturally handles multi-class problems</p>
+                    <p><strong>Cons:</strong> Slow prediction, sensitive to feature scaling, poor with high-dimensional data (curse of dimensionality)</p>
+                    <p><strong>Use cases:</strong> Recommendation systems, pattern recognition, simple baselines</p>
+                </div>
+            </div>
+
+            <h3 class="subsection-title">6. Unsupervised Learning</h3>
+
+            <p class="section-intro">Learning from unlabeled data—finding structure without being told the "right answer."</p>
+
+            <div class="algorithms-grid">
+                <div class="algorithm-card">
+                    <h3>Clustering</h3>
+                    <p><strong>Goal:</strong> Group similar data points together</p>
+                    <p><strong>Example:</strong> Segment customers into groups for targeted marketing</p>
+                    <p><strong>Output:</strong> Cluster assignments</p>
+                    <p><strong>Evaluation:</strong> Silhouette Score, Davies-Bouldin Index</p>
+                </div>
+
+                <div class="algorithm-card">
+                    <h3>Dimensionality Reduction</h3>
+                    <p><strong>Goal:</strong> Reduce features while preserving information</p>
+                    <p><strong>Example:</strong> Compress image features for visualization</p>
+                    <p><strong>Output:</strong> Reduced feature representation</p>
+                    <p><strong>Evaluation:</strong> Variance explained, reconstruction error</p>
+                </div>
+            </div>
+
+            <div class="algorithm-details">
+                <div class="algo-detail">
+                    <div class="algo-header">
+                        <h4>K-Means Clustering</h4>
+                        <span class="algo-type">Clustering</span>
+                    </div>
+                    <p><strong>How it works:</strong> Partitions data into k clusters by iteratively minimizing distance from points to cluster centers.</p>
+                    <p><strong>Pros:</strong> Fast, scalable, simple to understand, easy to implement</p>
+                    <p><strong>Cons:</strong> Requires specifying k, sensitive to initialization, assumes spherical clusters</p>
+                    <p><strong>Use cases:</strong> Customer segmentation, image compression, document clustering</p>
+                </div>
+
+                <div class="algo-detail">
+                    <div class="algo-header">
+                        <h4>DBSCAN (Density-Based Clustering)</h4>
+                        <span class="algo-type">Clustering</span>
+                    </div>
+                    <p><strong>How it works:</strong> Groups points based on density. Points in sparse regions are marked as outliers/noise.</p>
+                    <p><strong>Pros:</strong> No need to specify k, finds arbitrary-shaped clusters, detects outliers naturally</p>
+                    <p><strong>Cons:</strong> Sensitive to parameters (eps, min_samples), poor with varying density clusters</p>
+                    <p><strong>Use cases:</strong> Anomaly detection, spatial data analysis, outlier removal</p>
+                </div>
+
+                <div class="algo-detail">
+                    <div class="algo-header">
+                        <h4>Principal Component Analysis (PCA)</h4>
+                        <span class="algo-type">Dimensionality Reduction</span>
+                    </div>
+                    <p><strong>How it works:</strong> Projects data onto directions of maximum variance, creating uncorrelated components.</p>
+                    <p><strong>Pros:</strong> Reduces dimensionality, removes correlation, helps visualization, unsupervised</p>
+                    <p><strong>Cons:</strong> Components may be hard to interpret, assumes linear relationships</p>
+                    <p><strong>Use cases:</strong> Feature visualization, noise reduction, data compression</p>
+                </div>
+            </div>
+
+            <div class="section-chart">
+                <h3>Popularity of Supervised Learning Algorithms</h3>
+                <canvas id="algorithmChart"></canvas>
+            </div>
+        </div>
+    </section>
+
+    <!-- Overfitting Section -->
+    <section id="overfitting" class="section">
+        <div class="container">
+            <h2 class="section-title">7. Generalization vs Overfitting</h2>
+
+            <div class="overfitting-intro">
+                <p>One of the most critical concepts in machine learning: <strong>the model's ability to perform well on new, unseen data is far more important than perfect performance on training data.</strong></p>
+            </div>
+
+            <div class="overfitting-concepts">
+                <div class="concept-card">
+                    <h3>Generalization</h3>
+                    <p>A model's ability to perform well on new, unseen data—the actual goal of machine learning.</p>
+                    <p class="concept-indicator">✓ What we want</p>
+                </div>
+
+                <div class="concept-card">
+                    <h3>Underfitting</h3>
+                    <p>Model is too simple, performs poorly even on training data. <strong>High bias, low variance.</strong></p>
+                    <p class="concept-indicator">✗ Model too simple</p>
+                </div>
+
+                <div class="concept-card">
+                    <h3>Good Fit</h3>
+                    <p>Model captures the true underlying pattern; performs well on both training and validation data.</p>
+                    <p class="concept-indicator">✓ Sweet spot</p>
+                </div>
+
+                <div class="concept-card">
+                    <h3>Overfitting</h3>
+                    <p>Model memorizes training data (including noise), performing great on training but poorly on new data. <strong>Low bias, high variance.</strong></p>
+                    <p class="concept-indicator">✗ Model too complex</p>
+                </div>
+            </div>
+
+            <div class="overfitting-visual">
+                <h3>Training vs Validation Accuracy Curves</h3>
+                <svg viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg" class="overfitting-chart">
+                    <defs>
+                        <linearGradient id="gridGrad" x1="0%" y1="100%" x2="0%" y2="0%">
+                            <stop offset="0%" style="stop-color:#f0f0f0;stop-opacity:1" />
+                            <stop offset="100%" style="stop-color:#ffffff;stop-opacity:1" />
+                        </linearGradient>
+                    </defs>
+                    
+                    <!-- Background -->
+                    <rect x="60" y="30" width="700" height="300" fill="url(#gridGrad)" stroke="#ddd" stroke-width="1"/>
+                    
+                    <!-- Grid lines -->
+                    <line x1="60" y1="330" x2="760" y2="330" stroke="#ccc" stroke-width="2"/>
+                    <line x1="60" y1="30" x2="60" y2="330" stroke="#ccc" stroke-width="2"/>
+                    
+                    <!-- Y-axis labels -->
+                    <text x="40" y="340" font-size="12" text-anchor="end">0%</text>
+                    <text x="40" y="235" font-size="12" text-anchor="end">50%</text>
+                    <text x="40" y="130" font-size="12" text-anchor="end">100%</text>
+                    
+                    <!-- X-axis labels -->
+                    <text x="60" y="355" font-size="12" text-anchor="middle">Start</text>
+                    <text x="410" y="355" font-size="12" text-anchor="middle">Training Epochs</text>
+                    <text x="760" y="355" font-size="12" text-anchor="middle">End</text>
+                    
+                    <!-- Underfitting curve (both low) -->
+                    <circle cx="100" cy="280" r="3" fill="#999"/>
+                    <line x1="100" y1="280" x2="150" y2="270" stroke="#999" stroke-width="2" opacity="0.5"/>
+                    <circle cx="150" cy="270" r="3" fill="#999"/>
+                    <line x1="150" y1="270" x2="200" y2="265" stroke="#999" stroke-width="2" opacity="0.5"/>
+                    <circle cx="200" cy="265" r="3" fill="#999"/>
+                    
+                    <!-- Good fit (both rise together, gap minimal) -->
+                    <circle cx="300" cy="200" r="3" fill="var(--color-success)"/>
+                    <line x1="300" y1="200" x2="350" y2="120" stroke="var(--color-success)" stroke-width="3"/>
+                    <circle cx="350" cy="120" r="3" fill="var(--color-success)"/>
+                    <line x1="350" y1="120" x2="400" y2="100" stroke="var(--color-success)" stroke-width="3"/>
+                    <circle cx="400" cy="100" r="3" fill="var(--color-success)"/>
+                    
+                    <!-- Overfitting (training rises, validation plateaus/drops) -->
+                    <circle cx="480" cy="150" r="3" fill="var(--color-primary)"/>
+                    <line x1="480" y1="150" x2="520" y2="80" stroke="var(--color-primary)" stroke-width="3"/>
+                    <circle cx="520" cy="80" r="3" fill="var(--color-primary)"/>
+                    <line x1="520" y1="80" x2="560" y2="50" stroke="var(--color-primary)" stroke-width="3"/>
+                    <circle cx="560" cy="50" r="3" fill="var(--color-primary)"/>
+                    
+                    <!-- Validation in overfitting (drops) -->
+                    <circle cx="480" cy="180" r="3" fill="var(--color-accent)"/>
+                    <line x1="480" y1="180" x2="520" y2="200" stroke="var(--color-accent)" stroke-width="3" stroke-dasharray="5,5"/>
+                    <circle cx="520" cy="200" r="3" fill="var(--color-accent)"/>
+                    <line x1="520" y1="200" x2="560" y2="240" stroke="var(--color-accent)" stroke-width="3" stroke-dasharray="5,5"/>
+                    <circle cx="560" cy="240" r="3" fill="var(--color-accent)"/>
+                    
+                    <!-- Labels -->
+                    <text x="130" y="290" font-size="11" fill="#666">Underfitting</text>
+                    <text x="350" y="75" font-size="11" fill="var(--color-success)" font-weight="bold">Good Fit</text>
+                    <text x="500" y="35" font-size="11" fill="var(--color-primary)" font-weight="bold">Overfitting:</text>
+                    <text x="500" y="50" font-size="11" fill="var(--color-primary)" font-weight="bold">Training Acc.</text>
+                    <text x="500" y="260" font-size="11" fill="var(--color-accent)" font-weight="bold">Validation Acc.</text>
+                    
+                    <!-- Legend -->
+                    <line x1="620" y1="50" x2="650" y2="50" stroke="var(--color-primary)" stroke-width="3"/>
+                    <text x="660" y="55" font-size="11">Training Accuracy</text>
+                    
+                    <line x1="620" y1="80" x2="650" y2="80" stroke="var(--color-accent)" stroke-width="3" stroke-dasharray="5,5"/>
+                    <text x="660" y="85" font-size="11">Validation Accuracy</text>
+                </svg>
+            </div>
+
+            <div class="overfitting-solutions">
+                <h3>Solutions to Overfitting</h3>
+                <div class="solutions-grid">
+                    <div class="solution">
+                        <h4>1. Use More Data</h4>
+                        <p>More diverse training data helps the model generalize better and makes it harder to memorize.</p>
+                    </div>
+                    <div class="solution">
+                        <h4>2. Early Stopping</h4>
+                        <p>Stop training when validation accuracy plateaus or decreases, before overfitting occurs.</p>
+                    </div>
+                    <div class="solution">
+                        <h4>3. Regularization</h4>
+                        <p>Add penalty terms to loss function (L1/L2) to discourage complex models.</p>
+                    </div>
+                    <div class="solution">
+                        <h4>4. Simplify Model</h4>
+                        <p>Reduce model complexity: fewer features, shallower trees, smaller networks.</p>
+                    </div>
+                    <div class="solution">
+                        <h4>5. Cross-Validation</h4>
+                        <p>Train on multiple data splits to get robust estimate of generalization performance.</p>
+                    </div>
+                    <div class="solution">
+                        <h4>6. Ensemble Methods</h4>
+                        <p>Combine multiple models (Random Forest, Boosting) to reduce individual model variance.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-chart">
+                <h3>Model Complexity vs Accuracy</h3>
+                <canvas id="complexityChart"></canvas>
+            </div>
+        </div>
+    </section>
+
+    <!-- Task Framing Section -->
+    <section id="task-framing" class="section bg-light">
+        <div class="container">
+            <h2 class="section-title">8. Machine Learning Task Framing</h2>
+
+            <p class="section-intro">How you shape a real-world problem into an ML-solvable format is crucial. The same business problem can be framed multiple ways, each leading to different solutions.</p>
+
+            <div class="task-cards">
+                <div class="task-card">
+                    <div class="task-icon">📊</div>
+                    <h3>Classification</h3>
+                    <p class="task-definition"><strong>Definition:</strong> Assign input to a category</p>
+                    <p class="task-output"><strong>Output:</strong> Discrete label (class)</p>
+                    <p class="task-example"><strong>Example:</strong> Email spam detection (spam / not spam)</p>
+                    <p class="task-algorithms"><strong>Algorithms:</strong> Logistic Regression, Decision Tree, Random Forest, SVM, KNN</p>
+                    <p class="task-metrics"><strong>Metrics:</strong> Accuracy, Precision, Recall, F1-Score, AUC-ROC</p>
+                    <p class="task-apps"><strong>Real-world:</strong> Fraud detection, disease diagnosis, content moderation</p>
+                </div>
+
+                <div class="task-card">
+                    <div class="task-icon">🔀</div>
+                    <h3>Clustering</h3>
+                    <p class="task-definition"><strong>Definition:</strong> Group similar items without labels</p>
+                    <p class="task-output"><strong>Output:</strong> Cluster assignment</p>
+                    <p class="task-example"><strong>Example:</strong> Customer segmentation for marketing</p>
+                    <p class="task-algorithms"><strong>Algorithms:</strong> K-Means, DBSCAN, Hierarchical Clustering</p>
+                    <p class="task-metrics"><strong>Metrics:</strong> Silhouette Score, Davies-Bouldin Index, Calinski-Harabasz Index</p>
+                    <p class="task-apps"><strong>Real-world:</strong> Market segmentation, community detection, image compression</p>
+                </div>
+
+                <div class="task-card">
+                    <div class="task-icon">📈</div>
+                    <h3>Ranking</h3>
+                    <p class="task-definition"><strong>Definition:</strong> Order items by relevance/preference</p>
+                    <p class="task-output"><strong>Output:</strong> Ordered list</p>
+                    <p class="task-example"><strong>Example:</strong> Search engine results ranking</p>
+                    <p class="task-algorithms"><strong>Algorithms:</strong> Learning-to-Rank, Pairwise Models, ListNet</p>
+                    <p class="task-metrics"><strong>Metrics:</strong> NDCG, MAP, MRR, Precision@k</p>
+                    <p class="task-apps"><strong>Real-world:</strong> Search results, recommendation systems, information retrieval</p>
+                </div>
+
+                <div class="task-card">
+                    <div class="task-icon">⭐</div>
+                    <h3>Scoring</h3>
+                    <p class="task-definition"><strong>Definition:</strong> Assign continuous relevance/risk value</p>
+                    <p class="task-output"><strong>Output:</strong> Numeric score (0-1 or 0-100)</p>
+                    <p class="task-example"><strong>Example:</strong> Credit risk score for loan applications</p>
+                    <p class="task-algorithms"><strong>Algorithms:</strong> Linear/Logistic Regression, Gradient Boosting, Neural Networks</p>
+                    <p class="task-metrics"><strong>Metrics:</strong> MSE, MAE, R² Score, Spearman Correlation</p>
+                    <p class="task-apps"><strong>Real-world:</strong> Credit scoring, quality assessment, anomaly scoring</p>
+                </div>
+            </div>
+
+            <div class="info-box">
+                <h3>Framing Matters</h3>
+                <p>The same business problem can be framed as classification, clustering, ranking, or scoring depending on your goal. The choice affects data collection, model selection, and evaluation.</p>
+                <p style="margin-top: 1rem;"><strong>Example:</strong> "Find the best laptop for ML work"</p>
+                <ul>
+                    <li><strong>As Ranking:</strong> Order laptops by ML suitability score</li>
+                    <li><strong>As Scoring:</strong> Assign each laptop a suitability score (0-100)</li>
+                    <li><strong>As Classification:</strong> Binary: "Good for ML" vs "Not suitable"</li>
+                    <li><strong>As Clustering:</strong> Group laptops into performance tiers</li>
+                </ul>
+                <p style="margin-top: 1rem;">Each framing leads to different data pipelines, metrics, and deployment strategies.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Case Study Section -->
+    <section id="case-study" class="section">
+        <div class="container">
+            <h2 class="section-title">9. Case Study: Best Laptop Under ₹70,000 for Machine Learning</h2>
+
+            <div class="case-study-intro">
+                <p><strong>Scenario:</strong> A user wants to find the best laptop for machine learning work within a ₹70,000 budget.</p>
+                <p>We'll frame this as a real ML problem and walk through the workflow.</p>
+            </div>
+
+            <div class="case-components">
+                <div class="case-component">
+                    <h3>Problem Statement</h3>
+                    <p>Given a set of laptop specifications (price, CPU, RAM, GPU, storage, battery life), rank or score them by suitability for ML work.</p>
+                </div>
+
+                <div class="case-component">
+                    <h3>Task Type</h3>
+                    <p><strong>Best fit: Ranking or Scoring</strong></p>
+                    <p>We want to order laptops by ML suitability. This could be framed as:</p>
+                    <ul>
+                        <li><strong>Ranking:</strong> "Top 5 laptops for ML" with positions 1-5</li>
+                        <li><strong>Scoring:</strong> "ML suitability score" for each laptop (0-100)</li>
+                        <li><strong>Classification:</strong> "Suitable for ML" vs "Not suitable" (binary, simpler but less nuanced)</li>
+                    </ul>
+                </div>
+
+                <div class="case-component">
+                    <h3>Dataset</h3>
+                    <p><strong>Data sources:</strong></p>
+                    <ul>
+                        <li>Laptop specification databases (CPU benchmarks, GPU specs, RAM configs)</li>
+                        <li>Historical ML practitioner reviews/ratings</li>
+                        <li>Community feedback (Reddit, ML forums)</li>
+                        <li>Benchmarking: actual ML training times on candidate laptops</li>
+                    </ul>
+                    <p><strong>Sample size:</strong> 100-500 laptops in price range with ratings/performance data</p>
+                </div>
+
+                <div class="case-component">
+                    <h3>Features (Input Variables)</h3>
+                    <ul>
+                        <li><strong>CPU:</strong> Processor model, cores, clock speed, benchmark score</li>
+                        <li><strong>RAM:</strong> Total memory (8GB, 16GB, 32GB), speed (DDR4 vs DDR5)</li>
+                        <li><strong>GPU:</strong> Dedicated GPU presence (NVIDIA/AMD), VRAM, compute capability</li>
+                        <li><strong>Storage:</strong> SSD size (256GB, 512GB, 1TB), type (NVMe speed)</li>
+                        <li><strong>Price:</strong> Current cost in INR</li>
+                        <li><strong>Battery life:</strong> Hours of typical use (portability for ML work)</li>
+                        <li><strong>Cooling:</strong> Thermal design capability (important for sustained ML training)</li>
+                        <li><strong>Display:</strong> Resolution, color accuracy (matters for data visualization)</li>
+                    </ul>
+                </div>
+
+                <div class="case-component">
+                    <h3>Target (What We Predict)</h3>
+                    <p><strong>Option 1 - Scoring:</strong> Continuous ML suitability score (0-100)</p>
+                    <p><strong>Option 2 - Ranking:</strong> Rank position (1, 2, 3, ... out of N laptops)</p>
+                    <p><strong>How target is determined:</strong></p>
+                    <ul>
+                        <li>Historical ratings from ML practitioners (0-10 scale)</li>
+                        <li>Performance benchmarks: actual training time on standard ML tasks</li>
+                        <li>Community consensus from Reddit, Kaggle forums</li>
+                        <li>Normalized composite score combining raw performance, price-to-performance, and user satisfaction</li>
+                    </ul>
+                </div>
+
+                <div class="case-component">
+                    <h3>Model Selection</h3>
+                    <p><strong>Good candidates for this problem:</strong></p>
+                    <ul>
+                        <li><strong>Gradient Boosting (XGBoost, LightGBM):</strong> Captures non-linear feature interactions, handles mixed data types</li>
+                        <li><strong>Random Forest:</strong> Robust, provides feature importance, good baseline</li>
+                        <li><strong>Learning-to-Rank (LambdaRank):</strong> If ranking is the goal, specialized for ordering</li>
+                        <li><strong>Neural Network:</strong> If we have enough data, captures complex patterns</li>
+                    </ul>
+                </div>
+
+                <div class="case-component">
+                    <h3>Evaluation Metric</h3>
+                    <p><strong>For Scoring task:</strong></p>
+                    <ul>
+                        <li>Spearman Correlation: How well predicted scores match user preferences</li>
+                        <li>MAE (Mean Absolute Error): Average absolute difference in scores</li>
+                        <li>RMSE: Penalizes large prediction errors more</li>
+                    </ul>
+                    <p><strong>For Ranking task:</strong></p>
+                    <ul>
+                        <li>NDCG (Normalized Discounted Cumulative Gain): Measures ranking quality</li>
+                        <li>MAP (Mean Average Precision): Proportion of top-k predictions that are relevant</li>
+                        <li>Spearman Rank Correlation: Correlation between predicted and actual rankings</li>
+                    </ul>
+                </div>
+
+                <div class="case-component">
+                    <h3>Deployment Strategy</h3>
+                    <p><strong>Serving the model:</strong></p>
+                    <ul>
+                        <li>Web interface: User inputs budget, preferences (gaming, video editing, etc.)</li>
+                        <li>Model outputs ranked list or scores for laptops in that price range</li>
+                        <li>A/B testing: Compare against rule-based recommendations</li>
+                        <li>Feedback loop: User reviews help retrain the model monthly</li>
+                    </ul>
+                </div>
+
+                <div class="case-component">
+                    <h3>Rule-Based Alternative</h3>
+                    <p><strong>If we used rules instead:</strong></p>
+                    <ul>
+                        <li>Rule: IF GPU present AND RAM ≥ 16GB AND CPU benchmark > X THEN suitable for ML</li>
+                        <li>Simple, transparent, fast, no training data needed</li>
+                        <li>Problem: Misses nuanced interactions (e.g., weak GPU but exceptional CPU)</li>
+                        <li>Problem: Can't adapt as new laptop models with different specs emerge</li>
+                    </ul>
+                    <p><strong>Why ML is better here:</strong> Feature interactions are complex; rules would need constant manual updates as hardware evolves.</p>
+                </div>
+            </div>
+
+            <div class="case-comparison">
+                <h3>ML Approach vs Rule-Based Approach</h3>
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Aspect</th>
+                            <th>ML Ranking Model</th>
+                            <th>Hand-Coded Rules</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Development Time</strong></td>
+                            <td>2-4 weeks (data, features, training)</td>
+                            <td>1-2 days</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Data Required</strong></td>
+                            <td>100-500 rated laptops</td>
+                            <td>None</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Accuracy</strong></td>
+                            <td>High, captures preferences nuance</td>
+                            <td>Medium, misses interactions</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Adaptability</strong></td>
+                            <td>Retrains monthly with new data</td>
+                            <td>Manual rule updates needed</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Explainability</strong></td>
+                            <td>Feature importance available</td>
+                            <td>Fully transparent</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Maintenance Cost</strong></td>
+                            <td>Ongoing (monitoring, retraining)</td>
+                            <td>Low until rules become stale</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Performance</strong></td>
+                            <td>Handles new/unusual laptops well</td>
+                            <td>Brittle with novel specs</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="info-box">
+                <h3>Key Takeaway</h3>
+                <p>For stable, simple preferences ("Any laptop with GPU and 16GB RAM"), rules suffice. But for complex, evolving hardware ecosystems with user preferences that depend on subtle feature interactions, an ML ranking model provides superior, maintainable results.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Conclusion Section -->
+    <section id="conclusion" class="section bg-light">
+        <div class="container">
+            <h2 class="section-title">10. Conclusion & Key Takeaways</h2>
+
+            <div class="conclusion-summary">
+                <h3>Summary</h3>
+                <p>Machine learning is a powerful tool, but it's not the right solution for every problem. The decision to use ML vs rule-based systems depends on problem characteristics, data availability, regulatory constraints, and deployment context.</p>
+
+                <h3 style="margin-top: 2rem;">Key Takeaways</h3>
+                <div class="takeaways">
+                    <div class="takeaway">
+                        <div class="takeaway-number">1</div>
+                        <div class="takeaway-content">
+                            <h4>Not All Problems Need ML</h4>
+                            <p>Simple, stable logic is better served by rules. Over-engineering with ML wastes time and money.</p>
+                        </div>
+                    </div>
+
+                    <div class="takeaway">
+                        <div class="takeaway-number">2</div>
+                        <div class="takeaway-content">
+                            <h4>Data Quality Matters More Than Algorithms</h4>
+                            <p>A simple model trained on clean, representative data outperforms a complex model trained on poor data.</p>
+                        </div>
+                    </div>
+
+                    <div class="takeaway">
+                        <div class="takeaway-number">3</div>
+                        <div class="takeaway-content">
+                            <h4>Generalization is the Goal</h4>
+                            <p>Perfect training accuracy is meaningless if the model fails on new data. Overfitting is a constant threat.</p>
+                        </div>
+                    </div>
+
+                    <div class="takeaway">
+                        <div class="takeaway-number">4</div>
+                        <div class="takeaway-content">
+                            <h4>Interpretability & Explainability Matter</h4>
+                            <p>In regulated industries (finance, healthcare), transparent models are often required by law. Don't sacrifice compliance for accuracy.</p>
+                        </div>
+                    </div>
+
+                    <div class="takeaway">
+                        <div class="takeaway-number">5</div>
+                        <div class="takeaway-content">
+                            <h4>Problem Framing is Critical</h4>
+                            <p>How you frame a business problem as classification, clustering, ranking, or scoring shapes your entire pipeline.</p>
+                        </div>
+                    </div>
+
+                    <div class="takeaway">
+                        <div class="takeaway-number">6</div>
+                        <div class="takeaway-content">
+                            <h4>Monitoring is Non-Negotiable</h4>
+                            <p>Deployed models degrade silently. Continuous monitoring and retraining are essential for production systems.</p>
+                        </div>
+                    </div>
+
+                    <div class="takeaway">
+                        <div class="takeaway-number">7</div>
+                        <div class="takeaway-content">
+                            <h4>Start Simple, Iterate</h4>
+                            <p>Begin with rules or simple baselines. Introduce ML complexity only when data and business case justify it.</p>
+                        </div>
+                    </div>
+
+                    <div class="takeaway">
+                        <div class="takeaway-number">8</div>
+                        <div class="takeaway-content">
+                            <h4>Understand Your Data</h4>
+                            <p>Exploratory data analysis, feature engineering, and domain expertise are more valuable than algorithm selection.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="future-work">
+                <h3>Future Research Directions</h3>
+                <ul>
+                    <li><strong>Explainable AI (XAI):</strong> Making black-box models transparent without sacrificing accuracy.</li>
+                    <li><strong>AutoML:</strong> Automating feature engineering, model selection, and hyperparameter tuning.</li>
+                    <li><strong>Federated Learning:</strong> Training models on distributed data without centralizing sensitive information.</li>
+                    <li><strong>Few-Shot Learning:</strong> Learning effective models with minimal labeled data.</li>
+                    <li><strong>Continual Learning:</strong> Models that adapt to new data streams without catastrophic forgetting.</li>
+                    <li><strong>Fairness & Bias:</strong> Ensuring ML models don't perpetuate or amplify societal biases.</li>
+                    <li><strong>Causal ML:</strong> Moving beyond correlation to understand true cause-effect relationships.</li>
+                </ul>
+            </div>
+
+            <div class="decision-tree-final">
+                <h3>Final Decision Tree: Should You Use ML?</h3>
+                <svg viewBox="0 0 900 600" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+                            <polygon points="0 0, 10 3, 0 6" fill="var(--color-primary)"/>
+                        </marker>
+                    </defs>
+
+                    <!-- Start -->
+                    <rect x="350" y="20" width="200" height="60" rx="8" fill="var(--color-primary)"/>
+                    <text x="450" y="55" font-size="16" fill="white" text-anchor="middle" font-weight="bold">Do you have labeled data?</text>
+
+                    <!-- Arrow down -->
+                    <line x1="450" y1="80" x2="450" y2="120" stroke="var(--color-primary)" stroke-width="2" marker-end="url(#arrow)"/>
+
+                    <!-- Left branch: No data -->
+                    <rect x="100" y="120" width="150" height="60" rx="8" fill="var(--color-accent)"/>
+                    <text x="175" y="155" font-size="14" fill="white" text-anchor="middle" font-weight="bold">Use Rules</text>
+                    
+                    <line x1="350" y1="150" x2="250" y2="150" stroke="var(--color-accent)" stroke-width="2" marker-end="url(#arrow)"/>
+                    <text x="295" y="140" font-size="12" fill="var(--color-accent)">No</text>
+
+                    <!-- Right branch: Has data -->
+                    <rect x="600" y="120" width="150" height="60" rx="8" fill="var(--color-success)"/>
+                    <text x="675" y="155" font-size="14" fill="white" text-anchor="middle" font-weight="bold">Next question</text>
+                    
+                    <line x1="550" y1="150" x2="600" y2="150" stroke="var(--color-success)" stroke-width="2" marker-end="url(#arrow)"/>
+                    <text x="570" y="140" font-size="12" fill="var(--color-success)">Yes</text>
+
+                    <!-- Second decision -->
+                    <rect x="600" y="240" width="200" height="60" rx="8" fill="var(--color-primary)"/>
+                    <text x="700" y="265" font-size="14" fill="white" text-anchor="middle" font-weight="bold">Is the pattern</text>
+                    <text x="700" y="285" font-size="14" fill="white" text-anchor="middle" font-weight="bold">too complex for rules?</text>
+
+                    <line x1="675" y1="180" x2="700" y2="240" stroke="var(--color-primary)" stroke-width="2" marker-end="url(#arrow)"/>
+
+                    <!-- Left: Pattern is simple -->
+                    <rect x="500" y="360" width="150" height="60" rx="8" fill="var(--color-accent)"/>
+                    <text x="575" y="395" font-size="14" fill="white" text-anchor="middle" font-weight="bold">Use Rules</text>
+                    
+                    <line x1="650" y1="300" x2="600" y2="360" stroke="var(--color-accent)" stroke-width="2" marker-end="url(#arrow)"/>
+                    <text x="615" y="330" font-size="12" fill="var(--color-accent)">No</text>
+
+                    <!-- Right: Pattern is complex -->
+                    <rect x="750" y="360" width="150" height="60" rx="8" fill="var(--color-success)"/>
+                    <text x="825" y="395" font-size="14" fill="white" text-anchor="middle" font-weight="bold">Use ML</text>
+                    
+                    <line x1="750" y1="300" x2="800" y2="360" stroke="var(--color-success)" stroke-width="2" marker-end="url(#arrow)"/>
+                    <text x="770" y="330" font-size="12" fill="var(--color-success)">Yes</text>
+
+                    <!-- Third decision -->
+                    <rect x="350" y="360" width="200" height="80" rx="8" fill="var(--color-primary)"/>
+                    <text x="450" y="380" font-size="13" fill="white" text-anchor="middle" font-weight="bold">Do you have</text>
+                    <text x="450" y="400" font-size="13" fill="white" text-anchor="middle" font-weight="bold">resources for</text>
+                    <text x="450" y="420" font-size="13" fill="white" text-anchor="middle" font-weight="bold">maintenance?</text>
+
+                    <line x1="600" y1="270" x2="500" y2="360" stroke="var(--color-primary)" stroke-width="2" marker-end="url(#arrow)"/>
+
+                    <!-- No resources -->
+                    <rect x="100" y="480" width="150" height="60" rx="8" fill="var(--color-accent)"/>
+                    <text x="175" y="515" font-size="14" fill="white" text-anchor="middle" font-weight="bold">Use Rules</text>
+                    
+                    <line x1="350" y1="400" x2="250" y2="480" stroke="var(--color-accent)" stroke-width="2" marker-end="url(#arrow)"/>
+                    <text x="295" y="435" font-size="12" fill="var(--color-accent)">No</text>
+
+                    <!-- Has resources -->
+                    <rect x="350" y="480" width="150" height="60" rx="8" fill="var(--color-success)"/>
+                    <text x="425" y="515" font-size="14" fill="white" text-anchor="middle" font-weight="bold">Use ML</text>
+                    
+                    <line x1="450" y1="440" x2="425" y2="480" stroke="var(--color-success)" stroke-width="2" marker-end="url(#arrow)"/>
+                    <text x="470" y="460" font-size="12" fill="var(--color-success)">Yes</text>
+                </svg>
+            </div>
+        </div>
+    </section>
+
+    <!-- References Section -->
+    <section id="references" class="section">
+        <div class="container">
+            <h2 class="section-title">References</h2>
+            
+            <div class="references-list">
+                <ol>
+                    <li>Mitchell, T. M. (1997). <em>Machine Learning</em>. McGraw Hill.</li>
+                    <li>Bishop, C. M. (2006). <em>Pattern Recognition and Machine Learning</em>. Springer.</li>
+                    <li>Goodfellow, I., Bengio, Y., & Courville, A. (2016). <em>Deep Learning</em>. MIT Press.</li>
+                    <li>Hastie, T., Tibshirani, R., & Friedman, J. (2009). <em>The Elements of Statistical Learning</em>. Springer.</li>
+                    <li>Ng, A. (2021). "Machine Learning and AI via Brain Simulations." <em>Stanford Lecture Series</em>.</li>
+                    <li>Domingos, P. (2012). "A Few Useful Things to Know about Machine Learning." <em>Communications of the ACM</em>, 55(10), 78-87.</li>
+                    <li>Sculley, D., et al. (2015). "Hidden Technical Debt in Machine Learning Systems." <em>NIPS</em>.</li>
+                    <li>Lipton, Z. C. (2018). "The Mythos of Model Interpretability." <em>Communications of the ACM</em>, 61(10), 36-43.</li>
+                    <li>Chen, T., & Guestrin, C. (2016). "XGBoost: A Scalable Tree Boosting System." <em>KDD</em>.</li>
+                    <li>Breiman, L. (2001). "Random Forests." <em>Machine Learning</em>, 45(1), 5-32.</li>
+                    <li>Cortes, C., & Vapnik, V. (1995). "Support Vector Networks." <em>Machine Learning</em>, 20(3), 273-297.</li>
+                    <li>Lloyd, S. (1982). "Least Squares Quantization in PCM." <em>IEEE Transactions on Information Theory</em>.</li>
+                    <li>Ester, M., et al. (1996). "A Density-Based Algorithm for Discovering Clusters." <em>KDD</em>.</li>
+                    <li>Pearson, K. (1901). "On Lines and Planes of Closest Fit to Systems of Points in Space." <em>Philosophical Magazine</em>.</li>
+                    <li>Ruder, S. (2016). "An Overview of Gradient Descent Optimization Algorithms." <em>arXiv preprint arXiv:1609.04747</em>.</li>
+                    <li>Bengio, Y., et al. (2013). "Deep Learning." <em>MIT Press</em>.</li>
+                    <li>Barocas, S., Hardt, M., & Narayanan, A. (2019). "Fairness and Machine Learning." <em>fairmlbook.org</em>.</li>
+                    <li>Kaur, H., et al. (2020). "Interpretable Explanations of Black Boxes by Meaningful Perturbation." <em>ICLR</em>.</li>
+                </ol>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>About This Paper</h4>
+                    <p>A comprehensive guide to understanding machine learning fundamentals and making informed decisions about when to use ML vs rule-based systems.</p>
+                </div>
+
+                <div class="footer-section">
+                    <h4>Contact & Links</h4>
+                    <ul>
+                        <li><a href="https://github.com/vinaysingh-05m" target="_blank" rel="noopener">GitHub Repository</a></li>
+                        <li><a href="https://www.linkedin.com/in/vinay-kumar0805/" target="_blank" rel="noopener">LinkedIn</a></li>
+                        <li><a href="mailto:vk8964210@gmail.com">Email</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h4>License & Citation</h4>
+                    <p>Licensed under Creative Commons Attribution 4.0</p>
+                    <p style="font-size: 0.9rem; margin-top: 0.5rem;">Citation: ML Research Team (2024). "Machine Learning vs Rules: When to Use What"</p>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2024 ML Research Intrn @FlyrankAI . All rights reserved. | <a href="#home">Back to Top</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button id="backToTop" class="back-to-top" aria-label="Back to top">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="18 15 12 9 6 15"></polyline>
+        </svg>
+    </button>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
