@@ -1,260 +1,254 @@
-/* ==========================================================================
-   Machine Learning vs Rules — Research Paper Interactivity
-   ========================================================================== */
+document.addEventListener('DOMContentLoaded', function () {
 
-(() => {
-  'use strict';
+  /* ---------- Keep --navbar-h / --subnav-h / --header-h in sync ----------
+     The navbar can wrap onto a second line (so every link stays visible
+     instead of being clipped off-screen), which changes its real height.
+     We measure it and expose it as CSS variables so the reading progress
+     bar, subnav, hero, and scroll offsets always line up correctly. */
+  var navbarEl = document.getElementById('navbar');
+  var subnavEl = document.getElementById('subnav');
+  var root = document.documentElement;
 
-  /* ---------------- Current date in hero ---------------- */
-  const dateEl = document.getElementById('currentDate');
+  function syncHeaderHeights() {
+    var navH = navbarEl ? navbarEl.getBoundingClientRect().height : 64;
+    var subH = subnavEl ? subnavEl.getBoundingClientRect().height : 44;
+    root.style.setProperty('--navbar-h', navH + 'px');
+    root.style.setProperty('--subnav-h', subH + 'px');
+    root.style.setProperty('--header-h', (navH + subH) + 'px');
+  }
+
+  syncHeaderHeights();
+  window.addEventListener('resize', syncHeaderHeights);
+  window.addEventListener('load', syncHeaderHeights);
+  if (window.ResizeObserver) {
+    var ro = new ResizeObserver(syncHeaderHeights);
+    if (navbarEl) ro.observe(navbarEl);
+    if (subnavEl) ro.observe(subnavEl);
+  }
+
+  /* ---------- Current date ---------- */
+  var dateEl = document.getElementById('currentDate');
   if (dateEl) {
-    dateEl.textContent = new Date().toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-    });
+    dateEl.textContent = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
   }
 
-  /* ---------------- Theme toggle (light / dark) ---------------- */
-  const themeToggle = document.getElementById('themeToggle');
-  const root = document.documentElement;
-  const THEME_KEY = 'ml-paper-theme';
-
-  function applyTheme(theme) {
-    if (theme === 'dark') {
-      root.setAttribute('data-theme', 'dark');
-    } else {
-      root.removeAttribute('data-theme');
-    }
-  }
-
-  function getPreferredTheme() {
-    const stored = localStorage.getItem(THEME_KEY);
-    if (stored === 'light' || stored === 'dark') return stored;
-    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-  }
-
-  applyTheme(getPreferredTheme());
-
+  /* ---------- Dark mode ---------- */
+  var themeToggle = document.getElementById('themeToggle');
+  var storedTheme = localStorage.getItem('ml-paper-theme');
+  if (storedTheme === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
   if (themeToggle) {
-    themeToggle.addEventListener('click', () => {
-      const isDark = root.getAttribute('data-theme') === 'dark';
-      const next = isDark ? 'light' : 'dark';
-      applyTheme(next);
-      localStorage.setItem(THEME_KEY, next);
+    themeToggle.addEventListener('click', function () {
+      var isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+      if (isDark) {
+        document.documentElement.removeAttribute('data-theme');
+        localStorage.setItem('ml-paper-theme', 'light');
+      } else {
+        document.documentElement.setAttribute('data-theme', 'dark');
+        localStorage.setItem('ml-paper-theme', 'dark');
+      }
     });
   }
 
-  /* ---------------- Mobile nav toggle ---------------- */
-  const navToggle = document.getElementById('navToggle');
-  const navMenu = document.getElementById('navMenu');
-
+  /* ---------- Mobile nav toggle ---------- */
+  var navToggle = document.getElementById('navToggle');
+  var navMenu = document.getElementById('navMenu');
   if (navToggle && navMenu) {
-    navToggle.addEventListener('click', () => {
-      const open = navMenu.classList.toggle('open');
-      navToggle.classList.toggle('open', open);
-      navToggle.setAttribute('aria-expanded', String(open));
+    navToggle.addEventListener('click', function () {
+      navToggle.classList.toggle('open');
+      navMenu.classList.toggle('open');
     });
-
-    navMenu.querySelectorAll('.nav-link').forEach((link) => {
-      link.addEventListener('click', () => {
-        navMenu.classList.remove('open');
+    navMenu.querySelectorAll('.nav-link').forEach(function (link) {
+      link.addEventListener('click', function () {
         navToggle.classList.remove('open');
-        navToggle.setAttribute('aria-expanded', 'false');
+        navMenu.classList.remove('open');
       });
     });
   }
 
-  /* ---------------- Navbar shadow + reading progress on scroll ---------------- */
-  const navbar = document.getElementById('navbar');
-  const progressBar = document.getElementById('readingProgress');
-  const backToTop = document.getElementById('backToTop');
-
-  function onScroll() {
-    const scrollTop = window.scrollY || document.documentElement.scrollTop;
-    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-    const pct = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
-
+  /* ---------- Reading progress bar ---------- */
+  var progressBar = document.getElementById('readingProgress');
+  function updateProgress() {
+    var scrollTop = window.scrollY || document.documentElement.scrollTop;
+    var docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    var pct = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
     if (progressBar) progressBar.style.width = pct + '%';
-    if (navbar) navbar.classList.toggle('scrolled', scrollTop > 8);
-    if (backToTop) backToTop.classList.toggle('visible', scrollTop > 600);
   }
 
-  window.addEventListener('scroll', onScroll, { passive: true });
-  onScroll();
-
+  /* ---------- Back to top ---------- */
+  var backToTop = document.getElementById('backToTop');
+  function updateBackToTop() {
+    if (!backToTop) return;
+    if (window.scrollY > 500) backToTop.classList.add('visible');
+    else backToTop.classList.remove('visible');
+  }
   if (backToTop) {
-    backToTop.addEventListener('click', () => {
+    backToTop.addEventListener('click', function () {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     });
   }
 
-  /* ---------------- Active nav link highlighting ---------------- */
-  const sections = Array.from(document.querySelectorAll('section[id]'));
-  const navLinks = Array.from(document.querySelectorAll('.nav-link'));
+  /* ---------- Scrollspy: highlight active nav-link + subnav-link ---------- */
+  var navLinks = Array.prototype.slice.call(document.querySelectorAll('.nav-link'));
+  var subnavLinks = Array.prototype.slice.call(document.querySelectorAll('.subnav-link'));
 
-  if (sections.length && navLinks.length && 'IntersectionObserver' in window) {
-    const sectionObserver = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            const id = entry.target.getAttribute('id');
-            navLinks.forEach((link) => {
-              link.classList.toggle('active', link.getAttribute('href') === '#' + id);
-            });
-          }
-        });
-      },
-      { rootMargin: '-40% 0px -55% 0px', threshold: 0 }
-    );
-    sections.forEach((section) => sectionObserver.observe(section));
+  var sectionIds = navLinks.concat(subnavLinks)
+    .map(function (l) { return l.getAttribute('href'); })
+    .filter(function (h) { return h && h.charAt(0) === '#'; });
+
+  var sections = sectionIds
+    .map(function (id) { return document.querySelector(id); })
+    .filter(Boolean);
+
+  function setActive(id) {
+    navLinks.forEach(function (l) {
+      l.classList.toggle('active', l.getAttribute('href') === '#' + id);
+    });
+    subnavLinks.forEach(function (l) {
+      l.classList.toggle('active', l.getAttribute('href') === '#' + id);
+    });
   }
 
-  /* ---------------- Reveal-on-scroll animations ---------------- */
-  const revealSelectors = [
-    '.intro-card', '.algorithm-card', '.algo-detail', '.concept-card',
-    '.task-card', '.case-component', '.workflow-step', '.takeaway',
-    '.solution', '.pitfall', '.abstract-box', '.info-box',
-    '.framework-column', '.overfitting-visual', '.section-chart',
-    '.comparison-table-wrapper', '.decision-tree-final',
-  ];
-  const revealEls = document.querySelectorAll(revealSelectors.join(','));
-
-  if ('IntersectionObserver' in window) {
-    revealEls.forEach((el) => el.classList.add('reveal'));
-    const revealObserver = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('is-visible');
-            revealObserver.unobserve(entry.target);
-          }
-        });
-      },
-      { threshold: 0.12 }
-    );
-    revealEls.forEach((el) => revealObserver.observe(el));
-  } else {
-    revealEls.forEach((el) => el.classList.add('is-visible'));
+  function updateScrollspy() {
+    var headerH = navbarEl && subnavEl
+      ? navbarEl.getBoundingClientRect().height + subnavEl.getBoundingClientRect().height
+      : 140;
+    var offset = headerH + 20;
+    var current = sections.length ? sections[0].id : null;
+    for (var i = 0; i < sections.length; i++) {
+      var rect = sections[i].getBoundingClientRect();
+      if (rect.top - offset <= 0) current = sections[i].id;
+    }
+    if (current) setActive(current);
   }
 
-  /* ---------------- Download PDF button ---------------- */
-  const downloadBtn = document.getElementById('downloadPdf');
+  var ticking = false;
+  window.addEventListener('scroll', function () {
+    if (!ticking) {
+      window.requestAnimationFrame(function () {
+        updateProgress();
+        updateBackToTop();
+        updateScrollspy();
+        ticking = false;
+      });
+      ticking = true;
+    }
+  });
+
+  updateProgress();
+  updateBackToTop();
+  updateScrollspy();
+
+  /* ---------- Download PDF ---------- */
+  var downloadBtn = document.getElementById('downloadPdf');
   if (downloadBtn) {
-    downloadBtn.addEventListener('click', () => {
+    downloadBtn.addEventListener('click', function () {
       window.print();
     });
   }
 
-  /* ---------------- Chart.js visualizations ---------------- */
-  function initCharts() {
-    if (typeof Chart === 'undefined') return;
+  /* ---------- Charts ---------- */
+  if (typeof Chart !== 'undefined') {
+    var mutedGrid = 'rgba(128,138,158,0.15)';
 
-    const isDark = () => root.getAttribute('data-theme') === 'dark';
-    const gridColor = () => (isDark() ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.06)');
-    const textColor = () => (isDark() ? '#a7b0c2' : '#565f70');
-
-    Chart.defaults.font.family = "'Inter', sans-serif";
-
-    /* --- Workflow effort distribution --- */
-    const workflowCanvas = document.getElementById('workflowChart');
+    var workflowCanvas = document.getElementById('workflowChart');
     if (workflowCanvas) {
       new Chart(workflowCanvas, {
         type: 'bar',
         data: {
-          labels: [
-            'Problem Def.', 'Data Collection', 'Data Cleaning', 'Feature Eng.',
-            'Model Selection', 'Training', 'Validation', 'Testing',
-            'Deployment', 'Monitoring',
-          ],
+          labels: ['Problem Def.', 'Data Collection', 'Data Cleaning', 'Feature Eng.', 'Model Selection', 'Training', 'Validation', 'Testing', 'Deployment', 'Monitoring'],
           datasets: [{
-            label: 'Typical effort share (%)',
+            label: 'Typical Effort Share (%)',
             data: [5, 15, 25, 20, 8, 12, 6, 4, 3, 2],
-            backgroundColor: '#0056b3',
-            borderRadius: 4,
-            maxBarThickness: 36,
-          }],
+            backgroundColor: '#0056b3'
+          }]
         },
         options: {
           responsive: true,
           plugins: { legend: { display: false } },
-          scales: {
-            x: { ticks: { color: textColor(), maxRotation: 45, minRotation: 45 }, grid: { display: false } },
-            y: { ticks: { color: textColor(), callback: (v) => v + '%' }, grid: { color: gridColor() }, beginAtZero: true },
-          },
-        },
+          scales: { y: { grid: { color: mutedGrid }, beginAtZero: true }, x: { grid: { display: false } } }
+        }
       });
     }
 
-    /* --- Algorithm popularity --- */
-    const algoCanvas = document.getElementById('algorithmChart');
+    var algoCanvas = document.getElementById('algorithmChart');
     if (algoCanvas) {
       new Chart(algoCanvas, {
         type: 'bar',
         data: {
-          labels: ['Linear Regression', 'Logistic Regression', 'Decision Trees', 'Random Forest', 'SVM', 'KNN'],
+          labels: ['Linear Reg.', 'Logistic Reg.', 'Decision Tree', 'Random Forest', 'SVM', 'KNN'],
           datasets: [{
-            label: 'Relative usage in industry surveys',
-            data: [72, 78, 68, 85, 55, 48],
-            backgroundColor: ['#0056b3', '#3d7fc9', '#1f8a4c', '#1f8a4c', '#b8791a', '#c0432f'],
-            borderRadius: 4,
-          }],
+            label: 'Relative Industry Adoption',
+            data: [70, 82, 75, 90, 55, 60],
+            backgroundColor: ['#0056b3', '#004085', '#1f9d55', '#0056b3', '#e0a800', '#d9534f']
+          }]
         },
         options: {
-          indexAxis: 'y',
           responsive: true,
           plugins: { legend: { display: false } },
-          scales: {
-            x: { ticks: { color: textColor(), callback: (v) => v + '%' }, grid: { color: gridColor() }, beginAtZero: true, max: 100 },
-            y: { ticks: { color: textColor() }, grid: { display: false } },
-          },
-        },
+          scales: { y: { grid: { color: mutedGrid }, beginAtZero: true, max: 100 }, x: { grid: { display: false } } }
+        }
       });
     }
 
-    /* --- Complexity vs accuracy --- */
-    const complexityCanvas = document.getElementById('complexityChart');
+    var complexityCanvas = document.getElementById('complexityChart');
     if (complexityCanvas) {
-      const complexity = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
       new Chart(complexityCanvas, {
         type: 'line',
         data: {
-          labels: complexity.map((c) => 'Level ' + c),
+          labels: ['Very Low', 'Low', 'Medium', 'High', 'Very High'],
           datasets: [
             {
-              label: 'Training accuracy',
-              data: [55, 63, 71, 78, 85, 90, 94, 97, 99, 100],
+              label: 'Training Accuracy',
+              data: [55, 70, 85, 94, 99],
               borderColor: '#0056b3',
-              backgroundColor: 'rgba(0,86,179,0.12)',
+              backgroundColor: 'rgba(0,86,179,0.1)',
               tension: 0.35,
-              fill: true,
+              fill: true
             },
             {
-              label: 'Validation accuracy',
-              data: [50, 60, 68, 76, 82, 86, 85, 80, 72, 62],
-              borderColor: '#c0432f',
-              backgroundColor: 'rgba(192,67,47,0.08)',
+              label: 'Validation Accuracy',
+              data: [50, 68, 84, 80, 62],
+              borderColor: '#d9534f',
+              backgroundColor: 'rgba(217,83,79,0.1)',
               borderDash: [6, 4],
               tension: 0.35,
-              fill: true,
-            },
-          ],
+              fill: true
+            }
+          ]
         },
         options: {
           responsive: true,
-          plugins: { legend: { labels: { color: textColor() } } },
-          scales: {
-            x: { title: { display: true, text: 'Model complexity', color: textColor() }, ticks: { color: textColor() }, grid: { display: false } },
-            y: { title: { display: true, text: 'Accuracy (%)', color: textColor() }, ticks: { color: textColor() }, grid: { color: gridColor() }, min: 40, max: 100 },
-          },
+          plugins: { legend: { position: 'top' } },
+          scales: { y: { grid: { color: mutedGrid }, beginAtZero: true, max: 100 }, x: { title: { display: true, text: 'Model Complexity' }, grid: { display: false } } }
+        }
+      });
+    }
+
+    var flyrankCanvas = document.getElementById('flyrankResultsChart');
+    if (flyrankCanvas) {
+      new Chart(flyrankCanvas, {
+        type: 'bar',
+        data: {
+          labels: ['Spearman Correlation', 'Precision@20', '1 - Normalized MAE'],
+          datasets: [
+            {
+              label: 'Baseline (Position-Only)',
+              data: [0.42, 0.38, 0.55],
+              backgroundColor: '#9aa6bb'
+            },
+            {
+              label: 'Candidate Model (placeholder — replace with real results)',
+              data: [0.68, 0.61, 0.74],
+              backgroundColor: '#0056b3'
+            }
+          ]
         },
+        options: {
+          responsive: true,
+          plugins: { legend: { position: 'top' } },
+          scales: { y: { grid: { color: mutedGrid }, beginAtZero: true, max: 1 }, x: { grid: { display: false } } }
+        }
       });
     }
   }
-
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initCharts);
-  } else {
-    initCharts();
-  }
-})();
+});

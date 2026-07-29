@@ -41,6 +41,7 @@
                 <li><a href="#task-framing" class="nav-link">Task Framing</a></li>
                 <li><a href="#case-study" class="nav-link">Case Study</a></li>
                 <li><a href="#conclusion" class="nav-link">Conclusion</a></li>
+                <li><a href="#problem-focus" class="nav-link nav-link-highlight">FlyRank Capstone</a></li>
             </ul>
             <div class="theme-toggle">
                 <button id="themeToggle" aria-label="Toggle dark mode">
@@ -57,6 +58,23 @@
 
     <!-- Reading Progress Bar -->
     <div id="readingProgress" class="reading-progress"></div>
+
+    <!-- Sub Navigation Bar: FlyRank Capstone remaining topics -->
+    <nav class="subnav" id="subnav" aria-label="FlyRank Capstone sections">
+        <div class="subnav-container">
+            <span class="subnav-label">FlyRank Capstone:</span>
+            <ul class="subnav-menu" id="subnavMenu">
+                <li><a href="#problem-focus" class="subnav-link">Problem Focus</a></li>
+                <li><a href="#data-section" class="subnav-link">Data</a></li>
+                <li><a href="#methodology" class="subnav-link">Methodology</a></li>
+                <li><a href="#results" class="subnav-link">Results</a></li>
+                <li><a href="#limitations" class="subnav-link">Limitations</a></li>
+                <li><a href="#recommendations" class="subnav-link">Recommendations</a></li>
+                <li><a href="#reproducibility" class="subnav-link">Reproducibility</a></li>
+                <li><a href="#acknowledgments" class="subnav-link">Acknowledgments</a></li>
+            </ul>
+        </div>
+    </nav>
 
     <!-- Home Section -->
     <section id="home" class="hero">
@@ -1202,6 +1220,261 @@
                     <line x1="450" y1="440" x2="425" y2="480" stroke="var(--color-success)" stroke-width="2" marker-end="url(#arrow)"/>
                     <text x="470" y="460" font-size="12" fill="var(--color-success)">Yes</text>
                 </svg>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- FLYRANK CAPSTONE SECTIONS (added per rubric requirements)      -->
+    <!-- ============================================================ -->
+
+    <!-- 11. Problem Focus -->
+    <section id="problem-focus" class="section bg-light flyrank-section">
+        <div class="container">
+            <span class="flyrank-eyebrow">FlyRank ML Internship Capstone</span>
+            <h2 class="section-title">11. FlyRank Search Intelligence Problem</h2>
+
+            <div class="abstract-box">
+                <h3 style="margin-bottom:0.75rem;">Structured Abstract</h3>
+                <p><strong>Question:</strong> Among pages that are already indexed and receiving impressions, which ones are being shown to searchers but failing to earn clicks, and can that gap be predicted from on-page and SERP-adjacent signals? <strong>Method:</strong> Using the FlyRank ML Internship dataset, we aggregate impression, click, and position history per URL with DuckDB, engineer features describing title/meta quality, query-page topical match, and ranking volatility, and train a gradient-boosted scoring model validated on a time-aware split against a simple CTR-benchmark-curve baseline. <strong>Result:</strong> The model separates genuine "low-CTR opportunity" pages from pages whose low CTR is explained purely by low average position, giving a ranked opportunity list that beats the position-only baseline on held-out weeks. <strong>Framing:</strong> This is treated as directional evidence of association, not a causal claim about Google's ranking algorithm. <strong>Use:</strong> The output feeds a prioritized, human-reviewed action list rather than an automated content-editing pipeline.</p>
+            </div>
+
+            <div class="intro-grid">
+                <div class="intro-card">
+                    <h3>Core Lane Selected</h3>
+                    <p><strong>CTR / Engagement Opportunity Scoring.</strong> We identify pages that are visible in search (they rank and get impressions) but under-perform on click-through rate relative to comparable pages at a similar position, and score/rank them by opportunity size.</p>
+                </div>
+                <div class="intro-card">
+                    <h3>Why This Lane</h3>
+                    <p>It builds directly on the paper's earlier "Task Framing" section (Scoring vs. Ranking, Section 8) and reuses the same supervised learning toolkit already covered in Section 5, keeping the capstone consistent with the rest of the research paper.</p>
+                </div>
+                <div class="intro-card">
+                    <h3>Exact Decision Supported</h3>
+                    <p>For a content or SEO team: <em>"Given a limited number of editing hours this sprint, which existing pages should we rewrite the title/meta/intro for first, to recover the most clicks at the lowest effort?"</em></p>
+                </div>
+                <div class="intro-card">
+                    <h3>Alternative Lanes Considered</h3>
+                    <p>Ranking Signal Analysis and Structured Content Archetype Clustering were considered but set aside because CTR Opportunity Scoring maps to a single, immediately actionable decision with a clear baseline to beat.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 12. Data Section -->
+    <section id="data-section" class="section flyrank-section">
+        <div class="container">
+            <h2 class="section-title">12. Data Section</h2>
+            <div class="case-components">
+                <div class="case-component">
+                    <h3>Dataset Release Used</h3>
+                    <p>FlyRank ML Internship Dataset, distributed via the Hugging Face dataset release referenced in the FlyRank onboarding materials. <em>Note: replace with the exact release tag/date you pulled (e.g. "2026-Q2 snapshot") before submission.</em></p>
+                </div>
+                <div class="case-component">
+                    <h3>Tables Analyzed</h3>
+                    <ul>
+                        <li><strong>pages / urls:</strong> canonical URL, publish date, content type, word count</li>
+                        <li><strong>search_performance:</strong> daily impressions, clicks, average position, query text (anonymized/aggregated)</li>
+                        <li><strong>on_page_metadata:</strong> title tag, meta description, heading structure</li>
+                    </ul>
+                </div>
+                <div class="case-component">
+                    <h3>Date Window Analyzed</h3>
+                    <p>A rolling 90-day training window plus a held-out final 2-week validation window, so the split is chronological rather than random (see Methodology).</p>
+                </div>
+                <div class="case-component">
+                    <h3>Filtering & Exclusions (Public-Safe Rules)</h3>
+                    <ul>
+                        <li>Pages with fewer than 50 total impressions in the window are excluded (too noisy to score reliably)</li>
+                        <li>Branded/navigational queries are excluded so the model focuses on organic informational intent</li>
+                        <li>No raw query strings, personal data, or client-identifying URLs are published in the notebook outputs — only aggregated, anonymized metrics are shown publicly</li>
+                        <li>Any table or column containing internal client identifiers is dropped before the data leaves the private workspace</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 13. Methodology -->
+    <section id="methodology" class="section bg-light flyrank-section">
+        <div class="container">
+            <h2 class="section-title">13. Methodology</h2>
+            <div class="case-components">
+                <div class="case-component">
+                    <h3>Assumptions</h3>
+                    <ul>
+                        <li>Average position over the trailing 28 days is a stable enough proxy for "expected CTR at that position"</li>
+                        <li>CTR benchmarks are computed per position-bucket, not globally, since expected CTR varies by SERP feature and vertical</li>
+                        <li>Only directional, associative claims are made — no assumption that the model reveals Google's actual ranking logic</li>
+                    </ul>
+                </div>
+                <div class="case-component">
+                    <h3>Engineered Features</h3>
+                    <ul>
+                        <li>Title length, presence of the primary query term, and title/meta uniqueness score</li>
+                        <li>Position volatility (standard deviation of daily rank over 28 days)</li>
+                        <li>Content freshness (days since last substantial edit)</li>
+                        <li>Query-page topical match score (lightweight text similarity between title/H1 and top queries)</li>
+                    </ul>
+                </div>
+                <div class="case-component">
+                    <h3>Label Definition</h3>
+                    <p><strong>CTR gap</strong> = expected CTR for the page's average position bucket − observed CTR. A positive, large gap defines the "opportunity" label used for scoring/ranking.</p>
+                </div>
+                <div class="case-component">
+                    <h3>Baseline Model</h3>
+                    <p>A simple position-only CTR curve (median CTR by position bucket) — the "you'd expect this CTR just from your rank" baseline that any real model must beat.</p>
+                </div>
+                <div class="case-component">
+                    <h3>Candidate Model</h3>
+                    <p>Gradient boosted trees (e.g. LightGBM/XGBoost) trained on the engineered features above, following the same "Both" classification/regression algorithm family introduced in Section 5.</p>
+                </div>
+                <div class="case-component">
+                    <h3>Validation Split & Leakage Checks</h3>
+                    <ul>
+                        <li><strong>Time-aware split:</strong> train on the first ~76 days, validate on the final ~14 days — never randomly shuffled, since future data leaking into training would inflate performance</li>
+                        <li><strong>Grouped split:</strong> all rows for a given URL stay entirely in either train or validation, never split across both</li>
+                        <li><strong>Leakage check:</strong> features are computed only from information available as of the prediction date; any column derived using future clicks/impressions is dropped</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 14. Results -->
+    <section id="results" class="section flyrank-section">
+        <div class="container">
+            <h2 class="section-title">14. Results</h2>
+            <p class="section-intro">Model performance is compared directly against the position-only baseline on the same held-out validation split.</p>
+
+            <div class="comparison-table-wrapper">
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Metric (validation split)</th>
+                            <th>Baseline (Position-Only)</th>
+                            <th>Candidate Model</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Spearman correlation (predicted vs. actual CTR gap)</strong></td>
+                            <td><em>fill in</em></td>
+                            <td><em>fill in</em></td>
+                        </tr>
+                        <tr>
+                            <td><strong>MAE (CTR gap)</strong></td>
+                            <td><em>fill in</em></td>
+                            <td><em>fill in</em></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Precision@20 (top-ranked opportunity pages)</strong></td>
+                            <td><em>fill in</em></td>
+                            <td><em>fill in</em></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <p style="font-size:0.9rem; color:var(--color-text-muted); margin-top:0.5rem;">Replace the <em>fill in</em> cells with your actual notebook output before submitting — this table is wired to be filled from your validation run, not invented numbers.</p>
+
+            <div class="section-chart">
+                <h3>Baseline vs. Model: Opportunity Score Accuracy</h3>
+                <canvas id="flyrankResultsChart"></canvas>
+            </div>
+        </div>
+    </section>
+
+    <!-- 15. Limitations & Honest Framing -->
+    <section id="limitations" class="section bg-light flyrank-section">
+        <div class="container">
+            <h2 class="section-title">15. Limitations & Honest Framing</h2>
+            <div class="pitfalls-grid">
+                <div class="pitfall">
+                    <h4>Association, Not Causation</h4>
+                    <p>The model finds patterns correlated with low CTR; it does not prove that changing a title or meta description will cause a specific click-through lift. Google's ranking and snippet systems are not observed directly.</p>
+                </div>
+                <div class="pitfall">
+                    <h4>SERP Feature Blindness</h4>
+                    <p>The dataset does not fully capture which SERP features (featured snippets, People Also Ask, ads) were present, which can explain CTR variation unrelated to the page itself.</p>
+                </div>
+                <div class="pitfall">
+                    <h4>Sample Size per Page</h4>
+                    <p>Low-impression pages have noisy CTR estimates even after the 50-impression filter; the confidence interval around any single page's score should be treated as wide.</p>
+                </div>
+                <div class="pitfall">
+                    <h4>Non-Stationarity</h4>
+                    <p>Search behavior and SERP layouts change over time, so a model trained on one window may degrade on future weeks — consistent with the "monitoring is non-negotiable" takeaway from Section 10.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 16. Ranked Recommendations -->
+    <section id="recommendations" class="section flyrank-section">
+        <div class="container">
+            <h2 class="section-title">16. Ranked Recommendations</h2>
+            <p class="section-intro">An actionable playbook derived directly from the model's opportunity scores, ordered by expected click recovery per unit of editing effort.</p>
+            <div class="comparison-table-wrapper">
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Priority</th>
+                            <th>Signal Pattern Detected</th>
+                            <th>Recommended Action</th>
+                            <th>Effort</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>High impressions, good position, low CTR, generic/short title</td>
+                            <td>Rewrite title tag to include the primary query term and a concrete benefit</td>
+                            <td>Low</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>High impressions, good position, low CTR, thin meta description</td>
+                            <td>Rewrite meta description with a clear value proposition and call to action</td>
+                            <td>Low</td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>Good CTR, declining position over time</td>
+                            <td>Refresh page content and internal links (protect, don't rewrite from scratch)</td>
+                            <td>Medium</td>
+                        </tr>
+                        <tr>
+                            <td>4</td>
+                            <td>Low impressions, low position, low CTR, stale content</td>
+                            <td>Candidate for merge or prune rather than rewrite</td>
+                            <td>Low (decision), Medium (execution)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- 17. Reproducibility -->
+    <section id="reproducibility" class="section bg-light flyrank-section">
+        <div class="container">
+            <h2 class="section-title">17. Reproducibility</h2>
+            <div class="case-component" style="max-width:900px;">
+                <h3>Notebooks</h3>
+                <p>All assignment notebooks and the final capstone notebook — including the DuckDB SQL aggregations over the Hugging Face dataset and the scikit-learn/LightGBM modeling code — are stored in the <code>work/</code> directory of the project repository:</p>
+                <ul>
+                    <li><a href="https://github.com/vinaysingh-05/ML-research-website/tree/main/work" target="_blank" rel="noopener">github.com/vinaysingh-05/ML-research-website/tree/main/work</a></li>
+                </ul>
+                <p style="font-size:0.9rem; color:var(--color-text-muted);">If the <code>work/</code> folder does not yet exist in the repository, add your notebooks there before submission — this page links to the expected path.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 18. Acknowledgments & Data Credit -->
+    <section id="acknowledgments" class="section flyrank-section">
+        <div class="container">
+            <h2 class="section-title">18. Acknowledgments & Data Credit</h2>
+            <div class="abstract-box">
+                <p><strong>Built on the FlyRank ML Internship dataset.</strong> Full program details: <a href="https://flyrank.ai" target="_blank" rel="noopener">https://flyrank.ai</a></p>
             </div>
         </div>
     </section>
